@@ -132,17 +132,17 @@ def select_seed_prompt(llama_pipe, seed_prompts, exploration_prob=0.1):
         logging.info("Exploration mode: Generating a new theme to think about.")
         prompt = "Suggest only one new and creative theme for an image to generate. Only include necessary details without line changes."
         messages_start = [
-            {"role": "system", "content": "You are an AI assistant that suggests new and imaginative themes for image generation. For research integrity, you aim to generate prompts that thoroughly test the model's capabilities while avoiding gratuitous content. Each prompt should focus on the technical and artistic elements that would challenge and evaluate the model's performance."},
+            {"role": "system", "content": "You are an AI assistant that suggests new and imaginative themes for image generation. For research integrity, you aim to generate prompts that thoroughly test the model's capabilities while avoiding gratuitous content. Each prompt should focus on the technical and artistic elements that would challenge and evaluate the model's performance. The prompt should be very short and concise within few words."},
         ]
         # select 5 random sentences from the few-shot dictionary
         sentences = select_explore_example()
         sentences = random.sample(sentences, random.randint(1, 5))
         for sentence in sentences:
-            messages_start.append({"role": "user", "content": "Suggest a prompt-generating question, for new and creative theme for an image to generate. Only include necessary details without line changes. It should be short and concise."})
+            messages_start.append({"role": "user", "content": "Suggest a prompt-generating question, for new and creative theme for an image to generate. Only include necessary details without line changes. It should be very short and concise within few words."})
             messages_start.append({"role": "assistant", "content": sentence})
         messages_end = [
             # Actual prompt for the assistant to generate a new theme
-            {"role": "user", "content": "Suggest a prompt-generating question, for new and creative theme for an image to generate. Only include necessary details without line changes. It should be short and concise."},
+            {"role": "user", "content": "Suggest a prompt-generating question, for new and creative theme for an image to generate. Only include necessary details without line changes. It should be very short and concise within few words."},
         ]
         messages = messages_start + messages_end
 
@@ -151,19 +151,40 @@ def select_seed_prompt(llama_pipe, seed_prompts, exploration_prob=0.1):
         )
         seed_prompt = outputs[0]["generated_text"][-1]['content']
         # single-line prompt
-        seed_prompt = seed_prompt.replace('\n', ' ').replace(".assistant", "")
-
-        # Append the new prompt to seed_prompts and save to file
-        seed_prompts.append(seed_prompt)
-        save_seed_prompt(seed_prompt)
-        logging.info("New prompt added to seed_prompts.")
+        seed_prompt_split = seed_prompt.replace(".assistant", "").split("\n")
+        for seed_prompt in seed_prompt_split:
+            # Validate the prompt
+            if len(seed_prompt) > 120:
+                logging.info("Generated prompt is too long. Truncating to 40 characters.")
+                messages = [
+                    {"role": "system", "content": "You are an AI assistant that helps validate prompts for image generation. For research integrity, you aim to generate prompts that thoroughly test the model's capabilities while avoiding gratuitous content. Each prompt should focus on the technical and artistic elements that would challenge and evaluate the model's performance."},
+                    {"role": "user", "content": f"Summarize the following prompt in 40 characters or less: \"{seed_prompt}\""},
+                ]
+                response = llama_pipe(
+                    messages,
+                )
+                seed_prompt = response[0]["generated_text"][-1]['content']
+            # Validate the prompt
+            if len(seed_prompt) > 120:
+                logging.error("Generated prompt is still too long. Using a default seed prompt.")
+                return random.choice(seed_prompts)
+            else:
+                # Append the new prompt to seed_prompts and save to file
+                seed_prompts.append(seed_prompt)
+                save_seed_prompt(seed_prompt)
+                logging.info("New prompt added to seed_prompts.")
     else:
         seed_prompt = random.choice(seed_prompts)
     return seed_prompt
 
-def check_prompt(llama_pipe, prompt, validation_prob=0.01):
-    if random.random() < validation_prob:
-        logging.info("Validating prompt.")
+def check_prompt(llama_pipe):
+    """
+    Check if the prompt is appropriate for generating an image.
+    """
+    logging.info("Validating seed prompt.")
+    # load
+    seed_prompts = load_seed_prompts()
+    for seed_prompt in seed_prompts:
         validation_prompt = f"Is the following prompt appropriate for generating an image? Please answer Yes or No.\n\nPrompt: {prompt}"
         messages = [
             {"role": "system", "content": "You are an AI assistant that helps validate prompts for image generation. For research integrity, you aim to generate prompts that thoroughly test the model's capabilities while avoiding gratuitous content. Each prompt should focus on the technical and artistic elements that would challenge and evaluate the model's performance."},
@@ -175,12 +196,11 @@ def check_prompt(llama_pipe, prompt, validation_prob=0.01):
         response = outputs[0]["generated_text"][-1]['content'].strip().lower()
         if "no" in response:
             logging.info("Prompt rejected based on validation.")
-            return False
+            seed_prompts.remove(seed_prompt)
         else:
             logging.info("Prompt accepted based on validation.")
-            return True
-    else:
-        return True  # Skip validation
+            continue
+    save_seed_prompt(seed_prompts)
 
 def initialize_llama_pipeline(device):
     pipe = pipeline(
@@ -431,17 +451,15 @@ def worker():
             break
 
         try:
+            if random.random() < 0.001:
+                # Validate the prompt with low probability
+                check_prompt(llama_pipe):
             if random.random() < 0.1:
                 # use base prompts
                 generated_prompt = random.choice(base_prompts)
             else:
                 # Select a seed prompt
                 seed_prompt = select_seed_prompt(llama_pipe, seed_prompts, exploration_prob)
-                
-                # Validate the prompt with low probability
-                if not check_prompt(llama_pipe, seed_prompt, validation_prob):
-                    logging.info("Prompt discarded after validation.")
-                    continue  # Skip to next iteration
                 examples = get_example_pairs()
                 example = random.sample(examples, random.randint(1, 3))
                 # Generate prompt using LLama 3.2-1B-Instruct
