@@ -304,103 +304,103 @@ def get_example_pairs():
             "A vintage-style seaside town with cottages, lighthouses, and waves drawn in cross-hatching and stippling. The composition includes clouds rolling across the sky and seabirds gliding above, all in shades of black, white, and sepia. The intricate hatching technique gives texture and depth, resembling old engravings and creating a nostalgic, coastal charm."
         ),
         (
-            "Describe a vibrant blue copper sulfate crystal with prismatic facets.",
+            "Describe a vibrant blue chemical crystal.",
             "A vibrant blue copper sulfate (II) crystal, its prismatic facets glistening with a deep, azure hue."
         ),
         (
-            "Imagine a delicate cherry blossom branch in full bloom against a pastel sky. Describe it.",
+            "Imagine a delicate cherry blossom branch.",
             "A delicate cherry blossom branch in full bloom, its pale pink flowers contrasted against a soft, pastel blue sky."
         ),
         (
-            "Design a logo for a startup company named 'StabilityAI' featuring neural network elements.",
+            "Design a logo for a startup company.",
             "The logo of startup company 'StabilityAI', featuring a stylized, abstract representation of a neural network in shades of blue and green."
         ),
         (
-            "Describe a detailed illustration of a dragonfly on a water lily with shimmering wings.",
+            "Describe a detailed illustration of a dragonfly.",
             "A detailed illustration of a dragonfly perched on a water lily, its iridescent wings shimmering in the sunlight."
         ),
         (
-            "Create a stylized, geometric representation of the Eiffel Tower in shades of grey and silver.",
+            "Create a stylized, geometric representation of specific well known tower.",
             "A stylized, geometric representation of the Eiffel Tower, rendered in shades of grey and silver."
         ),
         (
-            "Imagine an abstract painting inspired by coral reefs with swirling patterns. Describe it.",
+            "Imagine an abstract painting.",
             "An abstract painting inspired by the colors and textures of a coral reef, with swirling patterns of turquoise, coral, and gold."
         ),
         (
-            "Describe a minimalist line drawing of mountains at sunrise with angular shapes.",
+            "Describe a minimalist line drawing.",
             "A minimalist line drawing of a mountain range at sunrise, with simple, angular shapes and a gradient sky in soft pastels."
         ),
         (
-            "Illustrate a person with a speech bubble showing 'E=mc^2' in a comic book style.",
+            "Illustrate a person with a speech bubble.",
             "A person with speech bubble describing 'E=mc^2' in a stylized, comic book-inspired illustration."
         ),
         (
-            "Imagine a woman wearing a t-shirt with 'I love AI' standing before a futuristic cityscape.",
+            "Imagine a woman wearing a t-shirt with text.",
             "A woman wearing a t-shirt with 'I love AI' written on it, standing in front of a futuristic cityscape."
         ),
         (
-            "Describe a steampunk airship with intricate gears and the words 'Bug Reports' engraved on it.",
+            "Describe a steampunk airship.",
             "A detailed illustration of a steampunk-inspired airship, with intricate gears and brass fittings. On the side of the airship, the words 'Bug Reports' are engraved."
         ),
         (
-            "Illustrate a paper with 'Hello World!' written in various programming languages, surrounded by code.",
+            "Illustrate a paper.",
             "A paper with 'Hello World!' written in various programming languages, surrounded by binary code and mathematical equations."
         ),
         (
-            "Depict a retro video game scene with a character jumping over obstacles and 'Level Up!' displayed.",
+            "Depict a retro video game scene with a character .",
             "In the scene of a retro video game, a pixelated character is jumping over obstacles, with the words 'Level Up!' displayed on the screen."
         ),
         (
-            "Imagine a blue bottle labeled 'Drink Me' in a Charlie Chaplin movie scene.",
+            "Imagine a random scene in retro movie.",
             "In the Charlie Chaplin movie, a blue-colored bottle with the label 'Drink Me' is placed on the table."
         ),
         (
-            "Describe a scientist's room with a chalkboard full of equations and lab equipment.",
+            "Describe a scientist's room with a chalkboard.",
             "In the room of a scientist, a chalkboard is filled with complex equations and diagrams, with a microscope and test tubes on the table."
         ),
         (
-            "Design a vintage poster advertising an 'AI Art Exhibition' with retro typography.",
+            "Design a vintage poster advertisement.",
             "A vintage-style poster advertising 'AI Art Exhibition', with bold, retro typography and colorful abstract shapes."
         ),
         (
-            "Illustrate a newspaper front page with the headline 'AI Breakthrough: New Algorithm Solves Decades-Old Problem'.",
+            "Illustrate a newspaper front page.",
             "The front page of a newspaper with headline 'AI Breakthrough: New Algorithm Solves Decades-Old Problem'."
         ),
         (
-            "Create a sci-fi novel cover featuring a futuristic cityscape and a mysterious figure titled 'Beyond the Stars' by Mark Darwin.",
+            "Create a sci-fi novel cover.",
             "The cover of a sci-fi novel featuring a futuristic cityscape and a mysterious figure in a hooded cloak, with the title 'Beyond the Stars'. Below the title, the author's name 'Mark Darwin' is printed."
         ),
         (
-            "Depict a broken robot hand holding a wrench next to a broken heart, symbolizing 'Mending Broken Hearts with Robots'.",
+            "Depict a broken robot with text for book title.",
             "Beside a broken heart, a robot hand is holding a wrench, symbolizing 'Mending Broken Hearts with Robots'; however, the robot hand is also broken."
         ),
         (
-            "Describe a mechanical clockwork heart with visible gears inside a transparent casing.",
+            "Describe a mechanical clockwork related creative concept.",
             "A detailed illustration of a mechanical clockwork heart, with gears and cogs turning inside a transparent casing."
         ),
         (
-            "Illustrate the front view of a clock tower with Roman numerals showing '12:00'.",
+            "Illustrate the front view of a clock tower.",
             "The front view of a clock tower with Roman numerals, showing the time '12:00'."
         ),
         (
-            "Depict a Nixie tube clock displaying '10:08' with glowing orange digits.",
+            "Depict a Nixie tube clock.",
             "A Nixie tube clock displaying the time '10:08', with glowing orange digits against a dark background."
         ),
         (
-            "Describe a bloody handprint on a wall with the words 'Help Me' written in blood.",
+            "Describe a bloody horror movie poster-related theme.",
             "A bloody handprint on the wall with the words 'Help Me' written in blood."
         ),
         (
-            "Illustrate a knife with blood stains next to a note saying 'You're Next'.",
+            "Illustrate a knife with blood with text.",
             "A knife with blood stains on it, placed on the table with a note 'You're Next'."
         ),
         (
-            "Depict a haunted house on a hill during a stormy night with a full moon.",
+            "Depict a haunted house.",
             "A detailed illustration of a haunted house on a hill, with dark storm clouds gathering overhead and a full moon in the sky."
         ),
         (
-            "Describe a spooky forest at night with twisted trees and glowing eyes in the shadows.",
+            "Describe a spooky forest.",
             "A spooky forest at night, with twisted trees and glowing eyes peering out from the shadows."
         ),
     ]
@@ -466,7 +466,8 @@ def worker():
                 )
 
                 generated_prompt = outputs[0]["generated_text"][-1]['content'].replace('\n', ' ').replace(".assistant", "")
-
+            if "can't" in generated_prompt:
+                raise Exception("Prompt contains 'can't' possibly due to model limitations.")
             # Generate a UUID
             output_uuid = uuid.uuid4()
 
